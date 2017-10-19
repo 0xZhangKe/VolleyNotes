@@ -59,6 +59,9 @@ public class RequestQueue {
     private final PriorityBlockingQueue<Request<?>> mNetworkQueue =
             new PriorityBlockingQueue<>();
 
+    /**
+     * 发起网络请求的线程数
+     */
     /** Number of network request dispatcher threads to start. */
     private static final int DEFAULT_NETWORK_THREAD_POOL_SIZE = 4;
 

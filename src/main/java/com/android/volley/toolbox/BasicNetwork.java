@@ -54,8 +54,14 @@ import java.util.TreeSet;
 public class BasicNetwork implements Network {
     protected static final boolean DEBUG = VolleyLog.DEBUG;
 
+    /**
+     * 慢请求阈值
+     */
     private static final int SLOW_REQUEST_THRESHOLD_MS = 3000;
 
+    /**
+     * 默认池大小
+     */
     private static final int DEFAULT_POOL_SIZE = 4096;
 
     /**
@@ -119,15 +125,19 @@ public class BasicNetwork implements Network {
 
     @Override
     public NetworkResponse performRequest(Request<?> request) throws VolleyError {
-        long requestStart = SystemClock.elapsedRealtime();
+        long requestStart = SystemClock.elapsedRealtime();//用于计算网络请求耗时
         while (true) {
             HttpResponse httpResponse = null;
             byte[] responseContents = null;
             List<Header> responseHeaders = Collections.emptyList();
             try {
+                //TODO request.getCacheEntry() 这里是获取额外的请求头，但是不知道具体是什么。
+                //TODO 似乎是因为 为HTTP 304响应合并缓存头与网络响应头。
+                //HTTP 304响应没有所有头字段。我们必须使用缓存条目中的头字段加上响应中的新字段
                 // Gather headers.
                 Map<String, String> additionalRequestHeaders =
                         getCacheHeaders(request.getCacheEntry());
+                //开始发起请求，并获取返回的 HttpResponse 数据
                 httpResponse = mBaseHttpStack.executeRequest(request, additionalRequestHeaders);
                 int statusCode = httpResponse.getStatusCode();
 

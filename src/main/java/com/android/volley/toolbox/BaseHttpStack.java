@@ -67,8 +67,10 @@ public abstract class BaseHttpStack implements HttpStack {
     public final org.apache.http.HttpResponse performRequest(
             Request<?> request, Map<String, String> additionalHeaders)
             throws IOException, AuthFailureError {
+        //通过 executeRequest 发起请求并获取到返回的 HttpResponse
         HttpResponse response = executeRequest(request, additionalHeaders);
 
+        //下面代码是将 HttpResponse 转换成 BasicHttpResponse
         ProtocolVersion protocolVersion = new ProtocolVersion("HTTP", 1, 1);
         StatusLine statusLine = new BasicStatusLine(
                 protocolVersion, response.getStatusCode(), "" /* reasonPhrase */);

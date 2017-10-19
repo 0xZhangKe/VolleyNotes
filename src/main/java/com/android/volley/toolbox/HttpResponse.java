@@ -21,6 +21,10 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Http 响应实体
+ */
+
 /** A response from an HTTP server. */
 public final class HttpResponse {
 

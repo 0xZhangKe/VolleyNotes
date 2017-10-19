@@ -17,6 +17,9 @@ package com.android.volley;
 
 import android.text.TextUtils;
 
+/**
+ * HTTP 请求头实体，其实就是类似键值对，普通的 Entity，一个 name 一个 value。
+ */
 /** An HTTP header. */
 public final class Header {
     private final String mName;

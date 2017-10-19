@@ -21,12 +21,19 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.http.AndroidHttpClient;
 import android.os.Build;
+import android.util.Log;
 
 import com.android.volley.Network;
 import com.android.volley.RequestQueue;
 
 import java.io.File;
 
+/**
+ * 所有的构造器最终都会调用 newRequestQueue(Context context, Network network) 构造器。
+ * 这个方法的第二个参数：Network 是个借口，看描述似乎是用于发送请求的接口。不明白具体含义。
+ * 其具体实现为 com.android.volley.toolbox.BasicNetwork, BasicNetwork 需要一个 HttpStack 构造。
+ * 具体实现有：BaseHttpStack、HurlStack、HttpClientStack。
+ */
 public class Volley {
 
     /** Default on-disk cache directory. */
