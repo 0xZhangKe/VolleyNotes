@@ -23,6 +23,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * 用来缓存与重用 byte[] 对象以防止大量 I/O 操作带来的内存消耗。
+ *
  * ByteArrayPool is a source and repository of <code>byte[]</code> objects. Its purpose is to
  * supply those buffers to consumers who need to use them for a short period of time and then
  * dispose of them. Simply creating and disposing such buffers in the conventional manner can

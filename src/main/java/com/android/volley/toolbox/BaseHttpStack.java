@@ -33,6 +33,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 其具体实现为{@link com.android.volley.toolbox.HurlStack}
+ * 及 {@link com.android.volley.toolbox.HttpClientStack}
+ * 其中主要有两个方法：executeRequest()、performRequest()；这两个方法的参数相同，但是返回值不同，
+ * 而 performRequest() 方法真正的核心代码也是调用 executeRequest() 方法，然后将返回值转成对应的返回值。
+ */
+
 /** An HTTP stack abstraction. */
 @SuppressWarnings("deprecation") // for HttpStack
 public abstract class BaseHttpStack implements HttpStack {

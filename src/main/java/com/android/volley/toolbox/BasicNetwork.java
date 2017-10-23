@@ -133,7 +133,7 @@ public class BasicNetwork implements Network {
             try {
                 //TODO request.getCacheEntry() 这里是获取额外的请求头，但是不知道具体是什么。
                 //TODO 似乎是因为 为HTTP 304响应合并缓存头与网络响应头。
-                //HTTP 304响应没有所有头字段。我们必须使用缓存条目中的头字段加上响应中的新字段
+                //HTTP 304 响应没有所有头字段。我们必须使用缓存条目中的头字段加上响应中的新字段
                 // Gather headers.
                 Map<String, String> additionalRequestHeaders =
                         getCacheHeaders(request.getCacheEntry());
@@ -143,7 +143,10 @@ public class BasicNetwork implements Network {
 
                 responseHeaders = httpResponse.getHeaders();
                 // Handle cache validation.
+                //如果响应吗为 304 ，则从缓存中获取数据
                 if (statusCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
+                    //304 ，HTTP 304 表示访问成功，但是与上次请求时相应数据没有发生改变，所以不会返回值，具体返回值
+                    //应该从缓存中获取，一般来说很少会遇到这种情况，网页中比较容易出现。
                     Entry entry = request.getCacheEntry();
                     if (entry == null) {
                         return new NetworkResponse(HttpURLConnection.HTTP_NOT_MODIFIED, null, true,
@@ -322,6 +325,8 @@ public class BasicNetwork implements Network {
     }
 
     /**
+     * 当响应吗为 304 且可以从本地缓存中获取数据时调用此方法合并 header
+     *
      * Combine cache headers with network response headers for an HTTP 304 response.
      *
      * <p>An HTTP 304 response does not have all header fields. We have to use the header fields
