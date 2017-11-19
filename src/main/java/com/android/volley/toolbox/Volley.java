@@ -29,10 +29,8 @@ import com.android.volley.RequestQueue;
 import java.io.File;
 
 /**
- * 所有的构造器最终都会调用 newRequestQueue(Context context, Network network) 构造器。
- * 这个方法的第二个参数：Network 是个借口，看描述似乎是用于发送请求的接口。不明白具体含义。
- * 其具体实现为 com.android.volley.toolbox.BasicNetwork, BasicNetwork 需要一个 HttpStack 构造。
- * 具体实现有：BaseHttpStack、HurlStack、HttpClientStack。
+ * 其中所有的方法最终都会调用 {@link #newRequestQueue(Context, Network)}.
+ *
  */
 public class Volley {
 
@@ -92,6 +90,10 @@ public class Volley {
         return newRequestQueue(context, new BasicNetwork(stack));
     }
 
+    /**
+     * 其他几个方法最终都会调用这个方法创建并初始化 RequestQueue
+     * @param network 只负责发送网络请求，至于缓存分发等交给 {@link RequestQueue} 实现。
+     */
     private static RequestQueue newRequestQueue(Context context, Network network) {
         File cacheDir = new File(context.getCacheDir(), DEFAULT_CACHE_DIR);
         RequestQueue queue = new RequestQueue(new DiskBasedCache(cacheDir), network);

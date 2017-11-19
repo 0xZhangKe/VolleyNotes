@@ -17,6 +17,8 @@
 package com.android.volley;
 
 /**
+ * 网络请求的接口，其实现类为：{@link com.android.volley.toolbox.BasicNetwork}
+ * {@link #performRequest(Request)} 方法用于发起网络请求
  * An interface for performing requests.
  */
 public interface Network {
