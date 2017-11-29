@@ -93,7 +93,7 @@ public class HurlStack extends BaseHttpStack {
         map.putAll(request.getHeaders());
         map.putAll(additionalHeaders);
 
-        //TODO 下面这一段暂时还不知道是干嘛的
+        //TODO 下面这一段暂时还不知道是干嘛的，应该是对 URL 进行处理。
         if (mUrlRewriter != null) {
             String rewritten = mUrlRewriter.rewriteUrl(url);
             if (rewritten == null) {
@@ -108,7 +108,7 @@ public class HurlStack extends BaseHttpStack {
             //将 request 中的 headers 及 additionalHeaders 遍历放入 RequestProperty 中。
             connection.addRequestProperty(headerName, map.get(headerName));
         }
-        setConnectionParametersForRequest(connection, request);//设置请求头及参数
+        setConnectionParametersForRequest(connection, request);//设置请求函数及参数
         // Initialize HttpResponse with data from the HttpURLConnection.
         int responseCode = connection.getResponseCode();//返回码
         if (responseCode == -1) {
