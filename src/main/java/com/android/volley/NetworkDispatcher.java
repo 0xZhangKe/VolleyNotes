@@ -87,6 +87,7 @@ public class NetworkDispatcher extends Thread {
             Request<?> request;
             try {
                 // Take a request from the queue.
+                //从阻塞队列中取出一个 Request ，如果队列是空的则进入阻塞状态，直到取出 Request
                 request = mQueue.take();
             } catch (InterruptedException e) {
                 // We may have been interrupted because it was time to quit.
@@ -107,7 +108,7 @@ public class NetworkDispatcher extends Thread {
                     continue;
                 }
 
-                addTrafficStatsTag(request);
+                addTrafficStatsTag(request);//流量统计
 
                 // Perform the network request.
                 NetworkResponse networkResponse = mNetwork.performRequest(request);

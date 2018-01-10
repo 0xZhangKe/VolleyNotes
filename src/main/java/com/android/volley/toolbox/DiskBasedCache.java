@@ -376,7 +376,10 @@ public class DiskBasedCache implements Cache {
         /** The last modified date for the requested object. */
         final long lastModified;
 
-        /** TTL for this record. */
+        /**
+         * Time To Live 存活次数，
+         * TTL for this record.
+         */
         final long ttl;
 
         /** Soft TTL for this record. */

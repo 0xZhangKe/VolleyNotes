@@ -36,3 +36,9 @@ public abstract HttpResponse executeRequest(
 ⑥返回码为 -1 抛出异常；
 ⑦通过请求函数及响应吗判断是否存在 body，不存在将 header 从 Map 转成 List ，包装成不包含 body 的 HttpResponse 返回，结束。
 ⑧存在 body， 将 header 从 Map 转成 List ，获取输出流，有异常则获取异常输出流，包装成包含 body(InputStream) 的 HttpResponse 返回，结束。
+
+## RequestQueue && NetworkDispatcher
+Volley 并不是使用线程池来管理网络连接请求，而是使用线程数组：NetworkDispatcher[]。
+默认情况下，Volley 会创建一个长度为 4 的线程数组，每个线程都是一个 NetworkDispatcher 对象，
+其中会通过 while(true) 不停地从 RequestQueue 中的阻塞队列：mNetworkQueue 中取出 Request ，并通过 Network 发起网络请求。
+所以一个 Volley 对象对应着四条工作线程，每一条都一直在运行，没有 Request 时就进入阻塞状态。
