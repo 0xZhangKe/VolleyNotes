@@ -83,27 +83,42 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     /** Default tag for {@link TrafficStats}. */
     private final int mDefaultTrafficStatsTag;
 
-    /** Lock to guard state which can be mutated after a request is added to the queue. */
+    /**
+     * 锁定到保护状态，当请求添加到队列后，该状态可以发生突变。
+     * Lock to guard state which can be mutated after a request is added to the queue.
+     */
     private final Object mLock = new Object();
 
     /** Listener interface for errors. */
     // @GuardedBy("mLock")
     private Response.ErrorListener mErrorListener;
 
-    /** Sequence number of this request, used to enforce FIFO ordering. */
+    /**
+     * 此请求的序列号，用于强制FIFO顺序
+     * Sequence number of this request, used to enforce FIFO ordering.
+     */
     private Integer mSequence;
 
     /** The request queue this request is associated with. */
     private RequestQueue mRequestQueue;
 
-    /** Whether or not responses to this request should be cached. */
+    /**
+     * 是否应缓存此请求的响应
+     * Whether or not responses to this request should be cached.
+     */
     private boolean mShouldCache = true;
 
-    /** Whether or not this request has been canceled. */
+    /**
+     * 这个请求是否被取消了
+     * Whether or not this request has been canceled.
+     */
     // @GuardedBy("mLock")
     private boolean mCanceled = false;
 
-    /** Whether or not a response has been delivered for this request yet. */
+    /**
+     * 是否已经为这个请求发送了响应
+     * Whether or not a response has been delivered for this request yet.
+     */
     // @GuardedBy("mLock")
     private boolean mResponseDelivered = false;
 

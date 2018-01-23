@@ -6,7 +6,7 @@ importantly, faster.
 For more information about Volley and how to use it, visit the [Android developer training
 page](https://developer.android.com/training/volley/index.html).
 # VolleyNotes
-本项目用于研究 Volley 的源码，直接 clone Volley 的仓库然后在其中添加 README 各种注释。
+本项目用于研究 Volley 的源码，直接 clone Volley 的仓库然后在其中添加 README 及各种注释。
 
 ## HttpStack
 HttpStack 是个接口，只有下面这个：
@@ -42,3 +42,16 @@ Volley 并不是使用线程池来管理网络连接请求，而是使用线程�
 默认情况下，Volley 会创建一个长度为 4 的线程数组，每个线程都是一个 NetworkDispatcher 对象，
 其中会通过 while(true) 不停地从 RequestQueue 中的阻塞队列：mNetworkQueue 中取出 Request ，并通过 Network 发起网络请求。
 所以一个 Volley 对象对应着四条工作线程，每一条都一直在运行，没有 Request 时就进入阻塞状态。
+## Request
+Request 是个泛型抽象类，其中泛型表示 HTTP 相应数据的类型（String、Json、Bitmap等）。
+抽象方法即：
+```
+//将响应数据转换为对应的泛型对象
+Response<T> parseNetworkResponse(NetworkResponse response);
+//请求结束后将该响应发送至监听器（需要根据泛型响应对应类型的数据）
+void deliverResponse(T response);
+```
+## StringRequest
+响应数据为 String 类型的 Request，继承 Request，其中主要是就是实现了 parseNetworkResponse
+方法，根据默认字符串类型（UTF-8）将 response 中的 data 转为 String，另外就是一些无关紧要的代码了。
+除此之外还有 JsonRequest、JsonArrayRequest、JsonObjectRequest、ImageRequest等等，其中相差不大，就不做过多解释了。
