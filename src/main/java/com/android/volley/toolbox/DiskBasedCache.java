@@ -483,7 +483,7 @@ public class DiskBasedCache implements Cache {
     //VisibleForTesting
     static class CountingInputStream extends FilterInputStream {
         private final long length;
-        private long bytesRead;
+        private long bytesRead;//当前已读取数据的长度
 
         CountingInputStream(InputStream in, long length) {
             super(in);
