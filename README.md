@@ -55,3 +55,6 @@ void deliverResponse(T response);
 响应数据为 String 类型的 Request，继承 Request，其中主要是就是实现了 parseNetworkResponse
 方法，根据默认字符串类型（UTF-8）将 response 中的 data 转为 String，另外就是一些无关紧要的代码了。
 除此之外还有 JsonRequest、JsonArrayRequest、JsonObjectRequest、ImageRequest等等，其中相差不大，就不做过多解释了。
+
+## CacheDispatcher
+结构跟 NetworkDispatcher 差不多，CacheDispatcher 代表一个缓存线程，当有一条新的请求时会通过 Cache 中判断当前请求是否存在缓存，
